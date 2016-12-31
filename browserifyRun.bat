@@ -1,2 +1,2 @@
-browserify "resources/js/main.js" -o "build/js/bundle.js" -d
+browserify "src/js/main.js" -o "dist/js/bundle.js" -d
 PAUSE

@@ -8,3 +8,5 @@ class Startup
     }
 
 }
+
+export default Startup;
