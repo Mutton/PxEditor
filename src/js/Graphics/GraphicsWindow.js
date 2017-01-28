@@ -12,19 +12,17 @@ var GraphicsWindow = function (jContainer, width, height, param)
 
     var renderer = PIXI.autoDetectRenderer(width, height, param);
     self.getRenderer = function () { return renderer; }
-    $( renderer ).on("render", function (event)
-    {
-        console.log("BAAAAM");
-    })
 
     var sceneGraph = new SceneGraph();
     self.getSceneGraph = function () { return sceneGraph; };
 
     var lastTimeoutDiff = 0;
-    var lastRenderTime = new Date().getTime();
-    var renderTimeout;
-    var tweakedRenderTimeout;
-    var renderFPS;
+    var lastRenderTimeBefore = (new Date()).getTime();
+    var lastRenderTimeAfter = lastRenderTimeBefore;
+    var renderTimeout = 100;
+    var actualRenderTimeout = renderTimeout;
+    var renderFPS = 1 / renderTimeout;
+    var actualRenderFPS = 1 / actualRenderTimeout;
     self.setRenderTimeout = function (value) 
     {
         renderTimeout = value; 
@@ -55,35 +53,26 @@ var GraphicsWindow = function (jContainer, width, height, param)
     self.render = function ()
     {
         jSelf.trigger("onRender");
-        // renderer.resize(renderer.width + 5, renderer.height + 5);
         renderer.render(sceneGraph.rootStage);
     }
 
     self.renderLoop = function ()
     {
-        console.log(counter); counter += 1; if (counter > 10) { self.stop(); return; }
-
         if (!isRunning){ return; }
 
-        var now = new Date().getTime();
+        var before = (new Date()).getTime();
         self.render();
+        var after = (new Date()).getTime();
+        var diff = after - before;
+        actualRenderTimeout = Math.round(renderTimeout - diff);
+        if (actualRenderTimeout < 0) { actualRenderTimeout = 0; }
+        actualRenderFPS = Math.round(1000 / actualRenderTimeout);
 
-        var timeoutDiff = now - lastRenderTime;
-        var deltaDiff = timeoutDiff - lastTimeoutDiff;
-        var actualFPS = 1 / (timeoutDiff / 1000);
-        tweakedRenderTimeout = renderTimeout + (renderTimeout - timeoutDiff) + (0 * deltaDiff);
+        console.log("actualRenderFPS: " + actualRenderFPS + " " + typeof(actualRenderFPS));
 
-        console.log("lastRenderTime: " + lastRenderTime);
-        console.log("timeoutDiff: " + timeoutDiff);
-        console.log("deltaDiff: " + deltaDiff);
-        console.log("actualFPS: " + actualFPS);
-        console.log("tweakedRenderTimeout: " + tweakedRenderTimeout);
-        // console.log(tweakedRenderTimeout + " | " + actualFPS + " | " + timeoutDiff);
-
-        lastRenderTime = now;
-        lastTimeoutDiff = timeoutDiff;
-
-        setTimeout(self.renderLoop, tweakedRenderTimeout);
+        lastRenderTimeBefore = before;
+        lastRenderTimeAfter = after;
+        setTimeout(self.renderLoop, actualRenderTimeout);
     }
 
     self.start = function ()
