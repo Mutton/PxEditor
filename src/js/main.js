@@ -18,7 +18,7 @@ var basicText = new PIXI.Text('Basic text in pixi');
 basicText.x = 30;
 basicText.y = 90;
 
-gw.getSceneGraph().rootStage.addChild(basicText);
+gw.getSceneGraph().getStage().addChild(basicText);
 
 
 

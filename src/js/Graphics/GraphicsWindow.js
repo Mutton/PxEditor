@@ -13,7 +13,7 @@ var GraphicsWindow = function (jContainer, width, height, param)
     var renderer = PIXI.autoDetectRenderer(width, height, param);
     self.getRenderer = function () { return renderer; }
 
-    var sceneGraph = new SceneGraph();
+    var sceneGraph = new SceneGraph("root");
     self.getSceneGraph = function () { return sceneGraph; };
 
     var lastTimeoutDiff = 0;
@@ -53,7 +53,7 @@ var GraphicsWindow = function (jContainer, width, height, param)
     self.render = function ()
     {
         jSelf.trigger("onRender");
-        renderer.render(sceneGraph.rootStage);
+        renderer.render(sceneGraph.getStage());
     }
 
     self.renderLoop = function ()
