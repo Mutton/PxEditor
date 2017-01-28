@@ -12,7 +12,7 @@ var jDiv = $( '<div></div>' );
 jBody.append( jDiv );
 var gw = new GraphicsWindow( jDiv[0], 200, 200, { backgroundColor : 0x999999 } );
 gw.loopTimeout = 500;
-gw.start();
+gw.startRender();
 
 var basicText = new PIXI.Text('Basic text in pixi');
 basicText.x = 30;

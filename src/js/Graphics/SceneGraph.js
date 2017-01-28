@@ -4,6 +4,9 @@ var SceneGraph = function (name)
 {
     var self = this;
 
+    // unique identifier / name for the stage (not controlled for now)
+    var name = name;
+
     // pixi container / stage on which operations are applied on
     var stage = new PIXI.Container();
     self.getStage = function () { return stage; }
