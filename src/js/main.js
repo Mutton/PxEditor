@@ -1,4 +1,5 @@
 const GraphicsWindow = require("./Graphics/GraphicsWindow");
+const SceneGraph = require("./Graphics/SceneGraph");
 const $ = require("jquery");
 
 
@@ -19,8 +20,6 @@ basicText.x = 30;
 basicText.y = 90;
 
 gw.getSceneGraph().getStage().addChild(basicText);
-
-
 
 
 // const TM = require("./testModule")

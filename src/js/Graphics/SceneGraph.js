@@ -6,6 +6,8 @@ var SceneGraph = function (name)
 
     // unique identifier / name for the stage (not controlled for now)
     var name = name;
+    self.getName = function () { return name; }
+    self.setName = function (value) { name = value; }
 
     // pixi container / stage on which operations are applied on
     var stage = new PIXI.Container();
@@ -13,6 +15,7 @@ var SceneGraph = function (name)
 
     // parent nodes / graphs
     var parents = new Array();
+    self.getParents = function () { return parents; }
     // add to own parents-array as well as the PIXI container / stage
     self.addParent = function (parent, duplicate = false)
     {
@@ -36,6 +39,7 @@ var SceneGraph = function (name)
 
     // child nodes / graphs
     var children = new Array();
+    self.getChildren = function () { return children; }
     // add to own children-array as well as the PIXI container / stage
     self.addChild = function (child, duplicate = false)
     {
@@ -58,10 +62,37 @@ var SceneGraph = function (name)
                 }
             }
         }
-        
     }
 
     return self;
+}
+
+
+// search for child-nodes with the specified name by going down 
+// the graph hierarchy by the given amount of searchLevel (0 == only local children)
+SceneGraph.childrenByName = function (sceneGraph, childName, searchLevel = 0, matches = new Array())
+{
+    var subMatches;
+    // abort if no search should be conducted according to searchLevel
+    if (searchLevel < 0) { return matches; }
+
+    var i;
+    var children = sceneGraph.getChildren();
+    for (i = 0; i < children.length; i++)
+    {
+        if (children[i].getName() === childName) 
+        {
+            // normale match on searchLevel 0
+            matches.push(children[i]); 
+        }
+        if (searchLevel > 0)
+        {
+            // search deeper down if desired searchLevel is sufficient
+            subMatches = SceneGraph.childrenByName(children[i], childName, searchLevel - 1, matches);
+            matches.concat(subMatches);
+        }
+    }
+    return matches;
 }
 
 module.exports = SceneGraph;
