@@ -67,7 +67,6 @@ var SceneGraph = function (name)
     return self;
 }
 
-
 // search for child-nodes with the specified name by going down 
 // the graph hierarchy by the given amount of searchLevel (0 == only local children)
 SceneGraph.childrenByName = function (sceneGraph, childName, searchLevel = 0, matches = new Array())

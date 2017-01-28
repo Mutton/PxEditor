@@ -22,6 +22,18 @@ basicText.y = 90;
 gw.getSceneGraph().getStage().addChild(basicText);
 
 
+
+// var someArr = new Array(); someArr.push(2); someArr.push("good"); 
+//     someArr.push(2); someArr.push("be"); someArr.push(true);
+//     someArr._marker = "bla";
+
+// console.log(someArr._marker);
+// console.log(someArr.indexOf(true));
+// console.log(someArr.indexOf(false));
+
+// for (var i = 0; i < someArr.length; i++) { console.log(someArr[i]); }
+
+
 // const TM = require("./testModule")
 // const AM = require("./anotherModule")
 // const PIXI = require("pixi.js");
