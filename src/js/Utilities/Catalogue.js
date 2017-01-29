@@ -10,7 +10,7 @@ var Catalogue = function ()
 
     // add value under related key
     // set duplicate to true to allow multiple identical values for the same key
-    self.add = function (key, value, duplicate = false)
+    self.addKeyValue = function (key, value, duplicate = false)
     {
         var index = keys.indexOf(key);
         if (index < 0) 
@@ -87,6 +87,10 @@ var Catalogue = function ()
             }
         }
     }
+
+    self.indexOfKey = function (key) { return keys.indexOf(key); }
+
+    self.indexOfValue = function (value) { return values.indexOf(value);  }
 
     return self;
 }
