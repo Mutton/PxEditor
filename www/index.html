@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>PxEditor</title>
+		<meta charset="UTF-8"> 
+        <link rel="stylesheet" type="text/css" href="assets/css/common.css">
+        <script data-main="assets/js/common" src="assets/js/lib/require.js"></script>
+    </head>
+    <body>
+        <h1>PxEditor</h1>
+        <script>
+            // using the common configs execute the code in main.js, the actual scripting entry point
+            require(["common"], function(){
+                require(["page/main"]);
+            });
+        </script>
+    </body>
+</html>
