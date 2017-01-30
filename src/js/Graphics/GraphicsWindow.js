@@ -1,5 +1,8 @@
-const $ = require("jquery");
-const PIXI = require("pixi.js");
+// const $ = require("jquery");
+// const PIXI = require("pixi.js");
+const $ = require("../../../vendors/jquery");
+const PIXI = require("../../../vendors/pixi");
+
 const SceneGraph = require("./SceneGraph");
 
 var GraphicsWindow = function (jContainer, width, height, param)

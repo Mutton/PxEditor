@@ -1,6 +1,5 @@
-const Catalogue = require("./Utilities/Catalogue");
-const EventProtocol = require("./Events/EventProtocol");
-const Utilities = require("./Utilities/Utilities");
+const EventProtocol = require("./EventProtocol");
+const Utilities = require("../Utilities/Utilities");
 
 var EventBus = function ()
 {
@@ -57,6 +56,11 @@ var EventBus = function ()
         return self.findInsertLinearInRange(address, linearStart, linearEnd);
     }
 
+    self.findIndex = function (address) 
+    {
+        return self.findIndexInRange(address);
+    }
+
     self.findIndexInRange = function (address, start, end)
     {
         var linearStart, linearEnd,  midIndex;
@@ -79,6 +83,7 @@ var EventBus = function ()
 
     self.subscribe = function (address, handler)
     {
+        console.log(address, handler);
         if (typeof(address) !== "string") 
         {
             console.log("EventBus: Aborted subscribe because the provided address is not a string!");

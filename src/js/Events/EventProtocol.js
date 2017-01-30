@@ -1,4 +1,4 @@
-const Utilities = require("./Utilities/Utilities");
+const Utilities = require("../Utilities/Utilities");
 
 var EventProtocol = function (sender, address, timeStamp, data)
 {
