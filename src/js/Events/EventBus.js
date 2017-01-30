@@ -6,8 +6,6 @@ var EventBus = function ()
 {
     var self = this;
 
-    var rootCatalogue = new Catalogue();
-
     var addresses = new Array();
     var subscribers = new Array();
     self.linearSearchThreshold = 10;
