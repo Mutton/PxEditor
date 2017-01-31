@@ -1,10 +1,12 @@
 define ([
     "jquery",
     "PIXI",
+    "page/Events/EventBus",
     "page/Graphics/SceneGraph"
 ], function (
     $,
     PIXI,
+    EventBus,
     SceneGraph
 ){
 
@@ -12,7 +14,7 @@ define ([
     {
         var self = this;
         var jSelf = $( self );
-
+        
         // jQuery-representative of the surrounding DOM-element
         var jContainer = jContainer;
         self.getJContainer = function () { return jContainer; };

@@ -84,6 +84,10 @@ require([
     // stopTime = (new Date()).getTime();
     // console.log("publish: " + (stopTime - startTime));
 
+
+    // var pattern = /^(ws:)\/{2}([0-9a-z][0-9a-z\-\.]+[0-9a-z]):[0-9]+$/;
+    // var str = "ws://localhost:81";
+    // console.log(str.search(pattern));
 });
 
 
