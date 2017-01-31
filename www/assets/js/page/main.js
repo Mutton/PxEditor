@@ -24,43 +24,41 @@ require([
     Utilities
 ){
 
-    var jWindow = $( window );
-    var jBody = $( "body" ); 
+    // var jWindow = $( window );
+    // var jBody = $( "body" ); 
 
-    var jDiv = $( '<div></div>' );
-    jBody.append( jDiv );
-    var gw = new GraphicsWindow( jDiv[0], 200, 200, { backgroundColor : 0x999999 } );
-    gw.loopTimeout = 500;
-    gw.startRender();
+    // var jDiv = $( '<div></div>' );
+    // jBody.append( jDiv );
+    // var gw = new GraphicsWindow( jDiv[0], 200, 200, { backgroundColor : 0x999999 } );
+    // gw.loopTimeout = 500;
+    // gw.startRender();
 
-    var basicText = new PIXI.Text('Basic text in pixi');
-    basicText.x = 30;
-    basicText.y = 90;
-    gw.getSceneGraph().getStage().addChild(basicText);
-
-
+    // var basicText = new PIXI.Text('Basic text in pixi');
+    // basicText.x = 30;
+    // basicText.y = 90;
+    // gw.getSceneGraph().getStage().addChild(basicText);
 
 
-    // var eb = new EventBus();
-    // var a1 = "ring.ding.dong";
-    // var a2 = "George Bush";
-    // var f1 = new function(eventProtocol) 
-    // {
-    //     console.log("WOOO " + eventProtocol);
-    // };
-    // var f2 = new function(eventProtocol) 
-    // {
-    //     console.log("HOOO " + eventProtocol);
-    // };
-    // var r = new function(eventProtocol)
-    // {
-    //     console.log("Message received! " + eventProtocol);
-    // };
+    var eb = new EventBus();
+    var a1 = "ring.ding.dong";
+    var a2 = "George Bush";
+    var f1 = function(eventProtocol) 
+    {
+        console.log("WOOO " + eventProtocol);
+    };
+    var f2 = function(eventProtocol) 
+    {
+        console.log("HOOO " + eventProtocol);
+    };
+    var r = function(eventProtocol)
+    {
+        console.log("Message received! " + eventProtocol);
+    };
 
-    // eb.subscribe(a1, f1);
+    eb.subscribe(a1, f1);
     // eb.subscribe(a2, f1);
     // eb.subscribe(a1, f2);
-    // eb.publish(new EventProtocol(document, a1, (new Date()).getTime(), { }), r);
+    eb.publish(new EventProtocol(document, a1, (new Date()).getTime(), { }), r);
     // eb.publish(new EventProtocol(document, a2, (new Date()).getTime(), { }), r);
 
     // eb.unsubscribe(a1, f1);

@@ -17,21 +17,48 @@ define ([
 
         self.findLinearInRange = function (address, start, end)
         {
+            if (typeof(address) !== "string") 
+            {
+                console.log("Aborting findLinearInRange because address is not a string!");
+            }
+            if (typeof(start) !== "number")
+            {
+                console.log("Aborting findLinearInRange because start is not a number!");
+            }
+            if (typeof(end) !== "number")
+            {
+                console.log("Aborting findLinearInRange because end is not a number!");
+            }
+
             var index = -1;
             if (start < 0) { start = 0; }
             if (end > (addresses.length - 1)) { end = addresses.length - 1; }
             if (start > end) { start = end; }
+            console.log("start: " + start + " end: " + end);
 
             for (i = end; i >= start; i--)
             {
+                console.log("??? " + i + " " + index);
                 if (addresses[i] === address) { index = i; break; }
             }
-
             return index;
         }
         
         self.findInsertLinearInRange = function (address, start, end)
         {
+            if (typeof(address) !== "string") 
+            {
+                console.log("Aborting findInsertLinearInRange because address is not a string!");
+            }
+            if (typeof(start) !== "number")
+            {
+                console.log("Aborting findInsertLinearInRange because start is not a number!");
+            }
+            if (typeof(end) !== "number")
+            {
+                console.log("Aborting findInsertLinearInRange because end is not a number!");
+            }
+
             if (start < 0) { start = 0; }
             if (end > (addresses.length - 1)) { end = addresses.length - 1; }
             if (start > end) { start = end; }
@@ -47,9 +74,41 @@ define ([
 
         self.findInsertIndex = function (address)
         {
-            var linearStart = 0;
-            var linearEnd = addresses.length;
-            var midIndex;
+            if (typeof(address) !== "string") 
+            {
+                console.log("Aborting findInsertIndex because address is not a string!");
+                return -1;
+            }
+
+            return self.findInsertIndexInRange(address, 0, addresses.length);
+        }
+
+        self.findInsertIndexInRange = function (address, start, end)
+        {
+            if (typeof(address) !== "string") 
+            {
+                console.log("Aborting findInsertIndexInRange because address is not a string!");
+                return -1;
+            }
+            if (typeof(start) !== "number")
+            {
+                console.log("Aborting findInsertIndexInRange because start is not a number!");
+                return -1;
+            }
+            if (typeof(end) !== "number")
+            {
+                console.log("Aborting findInsertIndexInRange because end is not a number!");
+                return -1;
+            }
+            if (addresses.length < 1) { return 0; }
+
+            var linearStart, linearEnd,  midIndex;
+
+            if (start < 0) { start = 0; }
+            if (end > (addresses.length - 1)) { end = addresses.length - 1; }
+            if (start > end) { start = end; }
+            linearStart = start;
+            linearEnd = end;
 
             while ((linearEnd - linearStart) > self.linearSearchThreshold)
             {
@@ -63,11 +122,34 @@ define ([
 
         self.findIndex = function (address) 
         {
-            return self.findIndexInRange(address);
+            if (typeof(address) !== "string") 
+            {
+                console.log("Aborting findIndex because address is not a string!");
+                return -1;
+            }
+
+            return self.findIndexInRange(address, 0, addresses.length);
         }
 
         self.findIndexInRange = function (address, start, end)
         {
+            if (typeof(address) !== "string") 
+            {
+                console.log("Aborting findIndexInRange because address is not a string!");
+                return -1;
+            }
+            if (typeof(start) !== "number")
+            {
+                console.log("Aborting findIndexInRange because start is not a number!");
+                return -1;
+            }
+            if (typeof(end) !== "number")
+            {
+                console.log("Aborting findIndexInRange because end is not a number!");
+                return -1;
+            }
+            if (addresses.length < 1) { return -1; }
+
             var linearStart, linearEnd,  midIndex;
 
             if (start < 0) { start = 0; }
@@ -88,21 +170,26 @@ define ([
 
         self.subscribe = function (address, handler)
         {
-            console.log(address, handler);
             if (typeof(address) !== "string") 
             {
-                console.log("EventBus: Aborted subscribe because the provided address is not a string!");
+                console.log("Aborted subscribe because the provided address is not a string!");
+                return false;
             }
             if (typeof(handler) !== "function") 
             {
-                console.log("EventBus: Aborted subscribe because the provided handler is not a function!");
+                console.log("Aborted subscribe because the provided handler is not a function!");
+                return false;
             }
 
             var index = self.findIndex(address);
             if (index > -1)
             {
                 // existing address
-                if (subscribers[index].indexOf(handler) < 0) { subscribers[index].splice(index, 0, handler); }
+                if (subscribers[index].indexOf(handler) < 0) 
+                { 
+                    // but handler new to address
+                    subscribers[index].push(handler); 
+                }
             }
             else
             {
@@ -115,6 +202,17 @@ define ([
 
         self.unsubscribe = function (address, handler)
         {
+            if (typeof(address) !== "string") 
+            {
+                console.log("Aborted unsubscribe because the provided address is not a string!");
+                return false;
+            }
+            if (typeof(handler) !== "function") 
+            {
+                console.log("Aborted unsubscribe because the provided handler is not a function!");
+                return false;
+            }
+
             var index = self.findIndex(address);
             if (index < 0) { return; }
 
@@ -134,7 +232,7 @@ define ([
         {
             if (!Utilities.isNonNullValue(eventProtocol)) 
             { 
-                console.log("EventBus: Aborting publish because null or undefined was provided as eventProtocol!");
+                console.log("Aborted publish because null or undefined was provided as eventProtocol!");
                 return true; 
             }
             if (eventProtocol.add)
@@ -143,6 +241,7 @@ define ([
             if (index < 0) { return; }
 
             var subs = subscribers[index];
+            console.log("### " + subscribers.length + " " + index + " " + eventProtocol.address);
             var i;
             if (typeof(messageReceivedHandler) === "function")
             {
@@ -156,7 +255,7 @@ define ([
                     }
                     catch (ex)
                     {
-                        console.log("EventBus: Uncallable subscriber: " + subscribers[i]);
+                        console.log("Uncallable subscriber: " + subscribers[i]);
                     }
                 }
             }
@@ -167,7 +266,7 @@ define ([
                     try { subscribers[i](eventProtocol); }
                     catch (ex)
                     {
-                        console.log("EventBus: Uncallable subscriber: " + subscribers[i]);
+                        console.log("Uncallable subscriber: " + subscribers[i]);
                     }
                 }
             }
