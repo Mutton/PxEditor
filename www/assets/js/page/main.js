@@ -39,30 +39,50 @@ require([
     // gw.getSceneGraph().getStage().addChild(basicText);
 
 
-    var eb = new EventBus();
-    var a1 = "ring.ding.dong";
-    var a2 = "George Bush";
-    var f1 = function(eventProtocol) 
-    {
-        console.log("WOOO " + eventProtocol);
-    };
-    var f2 = function(eventProtocol) 
-    {
-        console.log("HOOO " + eventProtocol);
-    };
-    var r = function(eventProtocol)
-    {
-        console.log("Message received! " + eventProtocol);
-    };
+    // var eb = new EventBus();
+    // var a1 = "ring.ding.dong";
+    // var a2 = "George Bush";
+    // var f1 = function (eventProtocol) 
+    // {
+    //     console.log("WOOO " + eventProtocol.address + " " +  eventProtocol.timeStamp);
+    // };
+    // var f2 = function (eventProtocol) 
+    // {
+    //     console.log("HOOO " + eventProtocol.address + " " +  eventProtocol.timeStamp);
+    // };
+    // var f3 = function (eventProtocol) { var bla = 999; };
+    // var r = function (eventProtocol)
+    // {
+    //     console.log("Return message! " + eventProtocol.address + " " + eventProtocol.timeStamp);
+    // };
 
-    eb.subscribe(a1, f1);
+    // eb.subscribe(a1, f1);
     // eb.subscribe(a2, f1);
     // eb.subscribe(a1, f2);
-    eb.publish(new EventProtocol(document, a1, (new Date()).getTime(), { }), r);
-    // eb.publish(new EventProtocol(document, a2, (new Date()).getTime(), { }), r);
+    // eb.publish(new EventProtocol(this, a1, (new Date()).getTime(), { }), r);
+    // eb.publish(new EventProtocol(this, a2, (new Date()).getTime(), { }), r);
 
     // eb.unsubscribe(a1, f1);
-    // eb.publish(new EventProtocol(document, a1, (new Date()).getTime(), { }), r);
+    // eb.publish(new EventProtocol(this, a1, (new Date()).getTime(), { }), r);
+
+    // var startTime, stopTime;
+    // var i;
+
+    // startTime = (new Date()).getTime();
+    // for (i = 0; i < 10000; i++)
+    // {
+    //     eb.subscribe(a1, function (eventProtocol) { var bla = 999; });
+    // }
+    // stopTime = (new Date()).getTime();
+    // console.log("subscribe: " + (stopTime - startTime));
+
+    // startTime = (new Date()).getTime();
+    // for (i = 0; i < 10000; i++)
+    // {
+    //     eb.publish(new EventProtocol(this, a1, (new Date()).getTime(), { }));
+    // }
+    // stopTime = (new Date()).getTime();
+    // console.log("publish: " + (stopTime - startTime));
 
 });
 

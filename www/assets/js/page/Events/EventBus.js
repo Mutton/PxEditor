@@ -34,11 +34,9 @@ define ([
             if (start < 0) { start = 0; }
             if (end > (addresses.length - 1)) { end = addresses.length - 1; }
             if (start > end) { start = end; }
-            console.log("start: " + start + " end: " + end);
 
             for (i = end; i >= start; i--)
             {
-                console.log("??? " + i + " " + index);
                 if (addresses[i] === address) { index = i; break; }
             }
             return index;
@@ -127,7 +125,7 @@ define ([
                 console.log("Aborting findIndex because address is not a string!");
                 return -1;
             }
-
+            
             return self.findIndexInRange(address, 0, addresses.length);
         }
 
@@ -164,7 +162,7 @@ define ([
                 if (address < addresses[midIndex]) { linearEnd = midIndex; }
                 else { linearStart = midIndex; }
             }
-
+            
             return self.findLinearInRange(address, linearStart, linearEnd);
         }
 
@@ -218,13 +216,12 @@ define ([
 
             var i = subscribers[index].indexOf(handler);
             if (i < 0) { return; }
-
-            subscribers[index].splice(i, 0);
-
+            
+            subscribers[index].splice(i, 1);
             if (subscribers[index].length < 1) 
             {
-                subscribers.splice(index, 0);
-                addresses.splice(index, 0); 
+                subscribers.splice(index, 1);
+                addresses.splice(index, 1); 
             }
         }
 
@@ -235,13 +232,11 @@ define ([
                 console.log("Aborted publish because null or undefined was provided as eventProtocol!");
                 return true; 
             }
-            if (eventProtocol.add)
-
+            
             var index = self.findIndex(eventProtocol.address);
             if (index < 0) { return; }
 
             var subs = subscribers[index];
-            console.log("### " + subscribers.length + " " + index + " " + eventProtocol.address);
             var i;
             if (typeof(messageReceivedHandler) === "function")
             {
@@ -255,18 +250,18 @@ define ([
                     }
                     catch (ex)
                     {
-                        console.log("Uncallable subscriber: " + subscribers[i]);
+                        console.log("Uncallable subscriber: " + subs[i]);
                     }
                 }
             }
             else
             {
-                for (i = 0; i < subscribers.length; i++)
+                for (i = 0; i < subs.length; i++)
                 {
-                    try { subscribers[i](eventProtocol); }
+                    try { subs[i](eventProtocol); }
                     catch (ex)
                     {
-                        console.log("Uncallable subscriber: " + subscribers[i]);
+                        console.log("Uncallable subscriber: " + subs[i] + " | " + ex);
                     }
                 }
             }
