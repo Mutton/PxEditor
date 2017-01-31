@@ -40,13 +40,22 @@ define ([
         var webSocket;
         self.getWebSocket = function () { return webSocket; }
 
+        var isOpen = false;
+        self.getIsOpen = function () { return isOpen; }
+
         self.openRetries = 10;
-        self.closeRetrues = 10;
+        self.closeRetries = 10;
 
 
 
         self.open = function (onFinishHandler = null)
         {
+            if (isOpen) 
+            {
+                if (typeof(onFinishHandler) === "function") { onFinishHandler(true); }
+                return true;
+            }
+
             var retries = self.openRetries;
             var r;
             for (r = 0; r < retries; r++)
@@ -56,6 +65,7 @@ define ([
                     webSocket = new WebSocket(uri, protocols);
                     if (Utilities.isNonNullValue(webSocket)) 
                     {
+                        isOpen = true;
                         if (typeof(onFinishHandler) === "function") { onFinishHandler(true); }
                         return true;
                     }
@@ -75,8 +85,15 @@ define ([
             return false;
         }
 
+        // closes 
         self.close = function (onFinishHandler)
         {
+            if (!Utilities.isNonNullValue(webSocket)) 
+            { 
+                if (typeof(onFinishHandler) === "function") { onFinishHandler(true); }
+                return true;
+            }
+
             var retries = self.closeRetries;
             var r;
             for (r = 0; r < retries; r++)
@@ -84,6 +101,7 @@ define ([
                 try
                 {
                     webSocket.close();
+                    isOpen = false;
                     if (typeof(onFinishHandler) === "function") { onFinishHandler(true); }
                     return true;
                 }
