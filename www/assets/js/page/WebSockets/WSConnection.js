@@ -1,6 +1,8 @@
 define ([
+    "page/WebSockets/WSProtocol",
     "page/Utilities/Utilities"
 ], function (
+    WSProtocol,
     Utilities
 ){
     var WSConnection = function (uri, initProtocols)
